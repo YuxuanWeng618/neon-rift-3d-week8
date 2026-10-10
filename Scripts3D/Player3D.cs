@@ -4,6 +4,7 @@
 // OUR RULES: 100 health, 7 world units/second, up to 5 shots/second,
 // 0.6-second damage immunity after being hit; WASD movement and mouse aiming/shooting.
 
+#nullable enable
 using Godot;
 using System;
 
@@ -18,9 +19,12 @@ public partial class Player3D : CharacterBody3D
 	[Signal]
 	public delegate void DiedEventHandler();
 
+	[Signal]
+	public delegate void HealthChangedEventHandler(float currentHealth, float maxHealth);
+
 	// OUR PLAYER STATS: max HP, movement speed (units/s), firing rate (shots/s).
-	private const float MaxHealth = 100f;
-	private const float MoveSpeed = 7f;
+	[Export] public float MaxHealth { get; set; } = 100f;
+	[Export] public float MoveSpeed { get; set; } = 7f;
 	private const float FireRate = 5f;
 
 	private float _fireCooldown;
@@ -30,10 +34,13 @@ public partial class Player3D : CharacterBody3D
 
 	private Vector2 _mousePosition;
 	private bool _hasMousePosition;
+	private bool _waitForFireRelease;
 
 	public bool Active { get; set; } = true;
 
-	public float Health { get; private set; } = MaxHealth;
+	public float Health { get; private set; }
+
+	public override void _Ready() => ResetPlayer(GlobalPosition);
 
 	// GODOT input callback: remember screen position for mouse-based aiming.
 	public override void _Input(InputEvent @event)
@@ -88,7 +95,10 @@ public partial class Player3D : CharacterBody3D
 
 		AimAtMouse();
 
-		if (Input.IsMouseButtonPressed(MouseButton.Left)
+		if (_waitForFireRelease && !Input.IsActionPressed("fire"))
+			_waitForFireRelease = false;
+
+		if (!_waitForFireRelease && Input.IsActionPressed("fire")
 			&& _fireCooldown <= 0f)
 		{
 			Fire();
@@ -165,7 +175,7 @@ public partial class Player3D : CharacterBody3D
 
 	public void TakeDamage(float damage)
 	{
-		if (!Active || _invulnerable > 0f)
+		if (!Active || _invulnerable > 0f || !float.IsFinite(damage) || damage <= 0f)
 		{
 			return;
 		}
@@ -182,9 +192,9 @@ public partial class Player3D : CharacterBody3D
 			Active = false;
 			Visible = false;
 
-			EmitSignal(
-				SignalName.Died);
 		}
+		EmitSignal(SignalName.HealthChanged, Health, MaxHealth);
+		if (Health <= 0f) EmitSignal(SignalName.Died);
 	}
 
 	public void ResetPlayer(Vector3 position)
@@ -193,14 +203,21 @@ public partial class Player3D : CharacterBody3D
 
 		Velocity = Vector3.Zero;
 
+		if (!float.IsFinite(MaxHealth) || MaxHealth <= 0) MaxHealth = 100f;
+		if (!float.IsFinite(MoveSpeed) || MoveSpeed <= 0) MoveSpeed = 7f;
 		Health = MaxHealth;
 
 		_fireCooldown = 0f;
 		_invulnerable = 0f;
 
 		_aimDirection = Vector3.Forward;
+		Rotation = Vector3.Zero;
+		_mousePosition = Vector2.Zero;
+		_hasMousePosition = false;
+		_waitForFireRelease = Input.IsActionPressed("fire");
 
 		Active = true;
 		Visible = true;
+		EmitSignal(SignalName.HealthChanged, Health, MaxHealth);
 	}
 }

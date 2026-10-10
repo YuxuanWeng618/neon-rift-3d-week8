@@ -1,10 +1,17 @@
 // Game3D connects actors, score and game state. EnemySpawner3D owns spawn rules.
 // Member B connects the survival timer/HUD and calls StopGame on victory.
 using Godot;
+using System;
 
 public partial class Game3D : Node3D
 {
     public EnemySpawner3D Spawner { get; private set; } = null!;
+    public bool IsRunning => _running;
+    public int Kills => _kills;
+    public int Score => _score;
+    public event Action RoundStarted;
+    public event Action<int, int> ScoreChanged;
+    private SurvivalGameManager _survival = null!;
     private PackedScene _bulletScene = null!;
     private Node3D _entities = null!;
     private Player3D _player = null!;
@@ -24,6 +31,9 @@ public partial class Game3D : Node3D
         Spawner.EnemySpawned += ConnectEnemy;
         _player.ShotRequested += SpawnPlayerBullet;
         _player.Died += EndWithDefeat;
+        _survival = GetNode<SurvivalGameManager>("SurvivalGameManager");
+        _survival.Initialize(this, _player);
+        GetNode<SurvivalHud>("SurvivalHud").Bind(this, _survival, _player);
         StartGame();
     }
 
@@ -36,11 +46,14 @@ public partial class Game3D : Node3D
     {
         Spawner.Stop();
         ClearEntities();
+        _entities.ProcessMode = ProcessModeEnum.Inherit;
         _kills = 0;
         _score = 0;
         _player.ResetPlayer(new Vector3(0f, 0.5f, 0f));
         Spawner.Start();
         _running = true;
+        ScoreChanged?.Invoke(_kills, _score);
+        RoundStarted?.Invoke();
     }
 
     // Shared end hook for Member B's victory timer and the existing defeat path.
@@ -49,6 +62,8 @@ public partial class Game3D : Node3D
         _running = false;
         Spawner.Stop();
         _player.Active = false;
+        _player.Velocity = Vector3.Zero;
+        _entities.ProcessMode = ProcessModeEnum.Disabled;
     }
 
     private void ConnectEnemy(Enemy3D enemy)
@@ -77,6 +92,7 @@ public partial class Game3D : Node3D
         if (!_running) return;
         _kills++;
         _score += points;
+        ScoreChanged?.Invoke(_kills, _score);
         // Survival kills affect score only; the 60-second win condition belongs to Member B.
         GD.Print($"Kills: {_kills} | Score: {_score}");
     }
@@ -84,8 +100,7 @@ public partial class Game3D : Node3D
     private void EndWithDefeat()
     {
         if (!_running) return;
-        StopGame();
-        GD.Print("GAME OVER!!!!");
+        _survival.FinishRound(SurvivalState.Lost);
     }
 
     private void ClearEntities()

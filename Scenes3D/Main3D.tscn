@@ -2,6 +2,9 @@
 
 [ext_resource type="PackedScene" uid="uid://bmqptbh3t3h7q" path="res://Scenes3D/Player3D.tscn" id="1_aw62g"]
 [ext_resource type="Script" uid="uid://du2chsab8re" path="res://Scripts3D/Game3D.cs" id="1_yorol"]
+[ext_resource type="Script" path="res://Scripts3D/SurvivalGameManager.cs" id="3_manager"]
+[ext_resource type="PackedScene" path="res://Scenes3D/SurvivalHud.tscn" id="4_hud"]
+[ext_resource type="Script" path="res://Scripts3D/ArenaPresentation3D.cs" id="5_arena"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_xtwny"]
 size = Vector3(20, 0.2, 14)
@@ -37,6 +40,7 @@ size = Vector3(0.3, 2, 14)
 script = ExtResource("1_yorol")
 
 [node name="Arena" type="Node3D" parent="." unique_id=1915289358]
+script = ExtResource("5_arena")
 
 [node name="Ground" type="StaticBody3D" parent="Arena" unique_id=1499611963]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
@@ -101,6 +105,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 [node name="Camera3D" type="Camera3D" parent="." unique_id=658675900]
 transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 14, 14)
 current = true
+fov = 60.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=659561289]
 transform = Transform3D(0.8660254, 0.38302222, -0.32139382, 0, 0.64278764, 0.76604444, 0.5, -0.66341394, 0.5566704, 0, 0, 0)
+
+[node name="SurvivalGameManager" type="Node" parent="."]
+script = ExtResource("3_manager")
+
+[node name="SurvivalHud" parent="." instance=ExtResource("4_hud")]

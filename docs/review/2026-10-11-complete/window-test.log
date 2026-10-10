@@ -1,0 +1,7 @@
+Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 576.52 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 3070 Ti Laptop GPU
+
+WINDOW PASS: (1280, 720); viewport=(1280, 720); rendered=(1280, 720); aim and GUI restart passed
+WINDOW PASS: (960, 540); viewport=(1280, 720); rendered=(960, 540); aim and GUI restart passed
+WINDOW PASS: (960, 720); viewport=(1280, 960); rendered=(960, 720); aim and GUI restart passed
+PASS: 27 graphical window checks
