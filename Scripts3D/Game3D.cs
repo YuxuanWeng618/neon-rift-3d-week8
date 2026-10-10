@@ -1,269 +1,99 @@
-// TEACHING GUIDE: Game3D is OUR game coordinator; Node3D and PackedScene are GODOT.
-// GODOT API: _Ready, _PhysicsProcess, GD.Load, GetNode, Instantiate, AddChild.
-// OUR RULES: first spawn at 1.5 s, then every 2.5 s; win after 10 kills;
-// first four kills unlock Strikers for all subsequent spawns; score depends on enemy type.
-// WORLD UNITS: speeds are Godot 3D units per second, not pixels per second.
-
+// Game3D connects actors, score and game state. EnemySpawner3D owns spawn rules.
+// Member B connects the survival timer/HUD and calls StopGame on victory.
 using Godot;
-using System;
 
 public partial class Game3D : Node3D
 {
-	// OUR victory condition: the player must defeat 10 enemies.
-	private const int TargetKills = 10;
+    public EnemySpawner3D Spawner { get; private set; } = null!;
+    private PackedScene _bulletScene = null!;
+    private Node3D _entities = null!;
+    private Player3D _player = null!;
+    private int _kills;
+    private int _score;
+    private bool _running;
 
-	private readonly RandomNumberGenerator _rng =
-		new();
+    public override void _Ready()
+    {
+        Engine.TimeScale = 1.0;
+        _bulletScene = GD.Load<PackedScene>("res://Scenes3D/Bullet3D.tscn");
+        _entities = GetNode<Node3D>("Entities");
+        _player = GetNode<Player3D>("Player");
+        Spawner = new EnemySpawner3D { Name = "EnemySpawner" };
+        AddChild(Spawner);
+        Spawner.Configure(_player, _entities);
+        Spawner.EnemySpawned += ConnectEnemy;
+        _player.ShotRequested += SpawnPlayerBullet;
+        _player.Died += EndWithDefeat;
+        StartGame();
+    }
 
-	private PackedScene _chaserScene = null!;
+    public override void _PhysicsProcess(double delta)
+    {
+        if (_running) Spawner.Tick(delta);
+    }
 
-	private PackedScene _strikerScene = null!;
+    public void StartGame()
+    {
+        Spawner.Stop();
+        ClearEntities();
+        _kills = 0;
+        _score = 0;
+        _player.ResetPlayer(new Vector3(0f, 0.5f, 0f));
+        Spawner.Start();
+        _running = true;
+    }
 
-	private PackedScene _bulletScene = null!;
+    // Shared end hook for Member B's victory timer and the existing defeat path.
+    public void StopGame()
+    {
+        _running = false;
+        Spawner.Stop();
+        _player.Active = false;
+    }
 
-	private Node3D _entities = null!;
+    private void ConnectEnemy(Enemy3D enemy)
+    {
+        enemy.Destroyed += OnEnemyDestroyed;
+        enemy.ShotRequested += SpawnEnemyBullet;
+    }
 
-	private Player3D _player = null!;
+    private void SpawnPlayerBullet(Vector3 position, Vector3 direction)
+        => SpawnBullet(position, direction, false, 14f, 24f);
 
-	private float _spawnTimer;
+    private void SpawnEnemyBullet(Vector3 position, Vector3 direction)
+        => SpawnBullet(position, direction, true, 8f, 11f);
 
-	private int _kills;
+    private void SpawnBullet(Vector3 position, Vector3 direction, bool hostile, float speed, float damage)
+    {
+        if (!_running) return;
+        Bullet3D bullet = _bulletScene.Instantiate<Bullet3D>();
+        _entities.AddChild(bullet);
+        bullet.GlobalPosition = position;
+        bullet.Configure(direction, speed, damage, hostile);
+    }
 
-	private int _score;
+    private void OnEnemyDestroyed(int points)
+    {
+        if (!_running) return;
+        _kills++;
+        _score += points;
+        // Survival kills affect score only; the 60-second win condition belongs to Member B.
+        GD.Print($"Kills: {_kills} | Score: {_score}");
+    }
 
-	private bool _running;
+    private void EndWithDefeat()
+    {
+        if (!_running) return;
+        StopGame();
+        GD.Print("GAME OVER!!!!");
+    }
 
-	// GODOT lifecycle callback, called when this scene enters the tree.
-	public override void _Ready()
-	{
-		Engine.TimeScale = 1.0;
-
-		_rng.Randomize();
-
-		_chaserScene =
-			GD.Load<PackedScene>(
-				"res://Scenes3D/ChaserEnemy3D.tscn");
-
-		_strikerScene =
-			GD.Load<PackedScene>(
-				"res://Scenes3D/StrikerEnemy3D.tscn");
-
-		_bulletScene =
-			GD.Load<PackedScene>(
-				"res://Scenes3D/Bullet3D.tscn");
-
-		_entities =
-			GetNode<Node3D>("Entities");
-
-		_player =
-			GetNode<Player3D>("Player");
-
-		// OUR signal-based design: actors request actions; Game3D owns spawning.
-		_player.ShotRequested +=
-			SpawnPlayerBullet;
-
-		_player.Died +=
-			EndWithDefeat;
-
-		StartGame();
-	}
-
-	public override void _PhysicsProcess(
-		double deltaValue)
-	{
-		if (!_running)
-		{
-			return;
-		}
-
-		float delta = Math.Min(
-			(float)deltaValue,
-			0.033f);
-
-		_spawnTimer -= delta;
-
-		if (_spawnTimer <= 0f)
-		{
-			SpawnEnemy();
-
-			// OUR spawning interval: one enemy every 2.5 seconds.
-			_spawnTimer = 2.5f;
-		}
-	}
-
-	private void StartGame()
-	{
-		ClearEntities();
-
-		_kills = 0;
-
-		_score = 0;
-
-		// OUR opening delay: spawn first enemy 1.5 seconds after game start.
-		_spawnTimer = 1.5f;
-
-		_running = true;
-
-		_player.ResetPlayer(
-			new Vector3(0f, 0.5f, 0f));
-	}
-
-	private void SpawnEnemy()
-	{
-		PackedScene selectedScene =
-			// OUR progression: spawn Chasers while kills = 0..3; then Strikers.
-			_kills < 4
-				? _chaserScene
-				: _strikerScene;
-
-		Enemy3D enemy =
-			selectedScene.Instantiate<Enemy3D>();
-
-		_entities.AddChild(enemy);
-
-		enemy.GlobalPosition =
-			RandomArenaEdgePosition();
-
-		enemy.Configure(_player);
-
-		enemy.Destroyed +=
-			OnEnemyDestroyed;
-
-		enemy.ShotRequested +=
-			SpawnEnemyBullet;
-	}
-
-	private Vector3 RandomArenaEdgePosition()
-	{
-		// OUR arena spawn bounds (world units), slightly inside the walls.
-		const float MaxX = 8.5f;
-		const float MaxZ = 5.5f;
-
-		int side =
-			_rng.RandiRange(0, 3);
-
-		if (side == 0)
-		{
-			return new Vector3(
-				_rng.RandfRange(-MaxX, MaxX),
-				0.5f,
-				-MaxZ);
-		}
-
-		if (side == 1)
-		{
-			return new Vector3(
-				MaxX,
-				0.5f,
-				_rng.RandfRange(-MaxZ, MaxZ));
-		}
-
-		if (side == 2)
-		{
-			return new Vector3(
-				_rng.RandfRange(-MaxX, MaxX),
-				0.5f,
-				MaxZ);
-		}
-
-		return new Vector3(
-			-MaxX,
-			0.5f,
-			_rng.RandfRange(-MaxZ, MaxZ));
-	}
-
-	private void SpawnPlayerBullet(
-		Vector3 position,
-		Vector3 direction)
-	{
-		// OUR PLAYER BULLET: friendly, 14 units/s, 24 HP damage.
-		SpawnBullet(
-			position,
-			direction,
-			false,
-			14f,
-			24f);
-	}
-
-	private void SpawnEnemyBullet(
-		Vector3 position,
-		Vector3 direction)
-	{
-		// OUR ENEMY BULLET: hostile, 8 units/s, 11 HP damage.
-		SpawnBullet(
-			position,
-			direction,
-			true,
-			8f,
-			11f);
-	}
-
-	private void SpawnBullet(
-		Vector3 position,
-		Vector3 direction,
-		bool hostile,
-		float speed,
-		float damage)
-	{
-		Bullet3D bullet =
-			_bulletScene.Instantiate<Bullet3D>();
-
-		_entities.AddChild(bullet);
-
-		bullet.GlobalPosition =
-			position;
-
-		bullet.Configure(
-			direction,
-			speed,
-			damage,
-			hostile);
-	}
-
-	// OUR scoring rule: each destroyed enemy counts as one kill and adds its points.
-	private void OnEnemyDestroyed(int points)
-	{
-		if (!_running)
-		{
-			return;
-		}
-
-		_kills++;
-
-		_score += points;
-
-		GD.Print(
-			$"Kills: {_kills}/{TargetKills}"
-			+ $" | Score: {_score}");
-
-		if (_kills >= TargetKills)
-		{
-			_running = false;
-
-			_player.Active = false;
-
-			GD.Print("VICTORY");
-		}
-	}
-
-	private void EndWithDefeat()
-	{
-		if (!_running)
-		{
-			return;
-		}
-
-		_running = false;
-
-		GD.Print("GAME OVER!!!!");
-	}
-
-	private void ClearEntities()
-	{
-		foreach (Node child
-			in _entities.GetChildren())
-		{
-			child.QueueFree();
-		}
-	}
+    private void ClearEntities()
+    {
+        foreach (Node child in _entities.GetChildren())
+        {
+            _entities.RemoveChild(child);
+            child.QueueFree();
+        }
+    }
 }

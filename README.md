@@ -4,7 +4,8 @@ AP6412 Week 8 双人协作项目。SUN ZIZHI 与 WENG YUXUAN 使用老师提供�
 
 ## 当前版本
 
-- 已确定 Version 2.0 方向为 Survival Mode；当前游戏代码仍是原始 Version 1.0，以下生存模式功能属于待实现计划。
+- 成员 A（SUN ZIZHI）的敌人/刷怪部分已实现：持续刷怪、时间驱动难度、安全生成位置、20 个敌人上限和启停/重置接口。详见 [成员 A 修改说明](docs/MEMBER_A_CHANGES.md)。
+- 成员 B 的 60 秒胜利判定、HUD、重启 UI 和玩家平衡仍待接入；当前分支不是完整的生存模式成品。
 - 正式双语项目计划见 [Neon Rift 3D Survival Plan](docs/Neon_Rift_3D_Survival_Plan_Bilingual.docx)。
 - `starter-v1.0` 标签保存原始项目导入提交。
 - 原始说明见 [docs/STARTER_README.md](docs/STARTER_README.md)。
@@ -20,7 +21,7 @@ AP6412 Week 8 双人协作项目。SUN ZIZHI 与 WENG YUXUAN 使用老师提供�
 4. 运行 `Scenes3D/Main3D.tscn`。
 5. W/A/S/D 移动，鼠标瞄准，按住鼠标左键射击。
 
-原版击败 10 个敌人获胜，血量归零失败。击杀、得分与胜负信息显示在 Godot Output 面板。
+当前分支击杀只计分，不再触发原版的 10 杀胜利；血量归零失败并停止刷怪。60 秒胜利由成员 B 接入。击杀、得分和失败信息显示在 Godot Output 面板。
 
 `NeonRiftStage1` 是原材料的程序集名称。
 
@@ -42,7 +43,8 @@ AP6412 Week 8 双人协作项目。SUN ZIZHI 与 WENG YUXUAN 使用老师提供�
 
 | 文件 | 主要职责 |
 | --- | --- |
-| `Scripts3D/Game3D.cs` | 开始游戏、生成敌人、统计击杀和得分、胜负判断 |
+| `Scripts3D/Game3D.cs` | 游戏启停、调用生成器、连接敌人事件、统计击杀和得分、处理失败 |
+| `Scripts3D/EnemySpawner3D.cs` | 持续刷怪、时间难度、安全位置、敌人上限及重置 |
 | `Scripts3D/Player3D.cs` | 玩家移动、瞄准、射击、血量 |
 | `Scripts3D/ChaserEnemy3D.cs` | 追击敌人属性与行为 |
 | `Scripts3D/StrikerEnemy3D.cs` | 远程敌人属性与射击行为 |
@@ -50,7 +52,7 @@ AP6412 Week 8 双人协作项目。SUN ZIZHI 与 WENG YUXUAN 使用老师提供�
 | `Scripts3D/Bullet3D.cs` | 弹丸移动与碰撞 |
 | `Scenes3D/` | 场景、碰撞形状、网格和材质 |
 
-计划新增 `Scripts3D/EnemySpawner3D.cs` 和 `Scripts3D/SurvivalGameManager.cs`。HUD 脚本和 UI 场景优先复用已有可用文件，具体名称在实现时确定。
+已新增 `Scripts3D/EnemySpawner3D.cs`。成员 B 可按需新增 `Scripts3D/SurvivalGameManager.cs`，或扩展已有协调器；接口见成员 A 修改说明。HUD 脚本和 UI 场景优先复用已有可用文件。
 
 ## 两人协作
 
