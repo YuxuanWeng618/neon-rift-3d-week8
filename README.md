@@ -8,7 +8,7 @@ AP6412 Week 8 双人协作项目。SUN ZIZHI 与 WENG YUXUAN 使用老师提供�
 - 成员B已接入60秒胜负、HUD、重启、低HP与最后10秒提示，完成本机验收和实际游戏视频。玩家参数保留原版，人工难度体验仍待试玩。
 - 本次开发使用 `feature/survival-ui-timer`，以成员A的 `8458863` 为基线，通过功能分支与PR交付。[完整审阅包](docs/review/2026-10-11-complete/README.md) 包含视频、11张效果图、382项检查与T01–T16记录。
 - 当前视觉按 [明亮街机规范](docs/VISUAL_STYLE.md) 制作，参数决策见 [平衡记录](docs/BALANCE_REVIEW.md)。
-- 功能分支已推送，已创建[草稿PR #1](https://github.com/YuxuanWeng618/neon-rift-3d-week8/pull/1)。尚未完成事项见[复核后的待办清单](docs/REMAINING_TASKS.md)。
+- 功能分支已推送，[PR #1](https://github.com/YuxuanWeng618/neon-rift-3d-week8/pull/1)已合入main并完成本机干净检出复验。详见[完成情况](docs/COMPLETION_REPORT.md)和[剩余事项](docs/REMAINING_TASKS.md)。
 - 正式双语项目计划见 [Neon Rift 3D Survival Plan](docs/Neon_Rift_3D_Survival_Plan_Bilingual.docx)。
 - `starter-v1.0` 标签保存原始项目导入提交。
 - 原始说明见 [docs/STARTER_README.md](docs/STARTER_README.md)。
@@ -26,7 +26,7 @@ AP6412 Week 8 双人协作项目。SUN ZIZHI 与 WENG YUXUAN 使用老师提供�
 
 击杀只计分，不会提前结束生存模式。存活 60 秒获胜，提前死亡失败；结束后停止时间、刷怪和现有敌人/弹丸更新，点击 `PLAY AGAIN` 开始新一局。HUD 显示时间、生命值、阶段、击杀和得分。
 
-本机可运行根目录的 `Run-Local.ps1` 启动本地版本；如 Godot 未加入 PATH，使用 `-GodotPath` 指定 .NET 版 Godot 可执行文件。
+可运行根目录的 `Run-Local.ps1` 启动本地版本；使用 `-GodotPath` 指定 .NET 版 Godot，或设置 `GODOT_DOTNET_PATH` / PATH。脚本不依赖开发者盘符。使用 `-VerifyOnly -IncludeWindowTests` 执行构建、导入和382项检查；操作步骤见[第二台电脑指南](docs/SECOND_COMPUTER_CHECK.md)。
 
 `NeonRiftStage1` 是原材料的程序集名称。
 
@@ -69,6 +69,8 @@ AP6412 Week 8 双人协作项目。SUN ZIZHI 与 WENG YUXUAN 使用老师提供�
 
 详见 [T01–T16验收](docs/review/2026-10-11-complete/ACCEPTANCE.md) 和 [演示视频](docs/review/2026-10-11-complete/survival-demo.mp4)。测试与录制场景仅用于开发验证，正式主场景不加载这些脚本。
 
+[PR #1](https://github.com/YuxuanWeng618/neon-rift-3d-week8/pull/1)已合入main，保留双方提交。合并后从GitHub重新克隆、构建及382项检查通过；交付记录见[完成情况](docs/COMPLETION_REPORT.md)和[复验记录](docs/review/2026-10-11-delivery/README.md)。
+
 ## 两人协作
 
 | 成员 | 建议分支 | 主要任务与文件 |
@@ -96,14 +98,17 @@ AP6412 Week 8 双人协作项目。SUN ZIZHI 与 WENG YUXUAN 使用老师提供�
 - [x] 胜利或失败后停止计时和生成新敌人。
 - [x] 重新开始后所有状态与难度进度正确重置。
 - [x] 成员A与成员B功能已在同一场景完成本机集成验证。
-- [x] 功能分支已提交、推送并创建草稿PR。
+- [x] 功能分支已提交、推送，PR已转为正式状态并合入main。
 - [ ] 人工试玩与难度评价已记录。
 - [ ] 队友完成正式代码审查。
-- [ ] 审查通过后合入main，双方取得合并版本并复验。
+- [x] 工具辅助代码复核完成，主分支合并记录已保存。
+- [x] 从GitHub取得合并后的main，本机干净检出复验通过。
+- [ ] 两位组员分别在各自电脑取得main并复验。
 - [x] 说明修改了哪些类、各自职责和修改原因。
 - [x] 项目计划文档已上传。
-- [x] 已保留成员A和成员B的分支、提交及草稿PR记录。
-- [ ] 主分支合并记录与课程提交回执已保存。
+- [x] 已保留成员A和成员B的分支、提交及PR记录。
+- [x] 课程提交材料与英文项目说明已准备。
+- [ ] NTULearn截止时间已核对，课程提交回执已保存。
 
 ## 课程原始材料
 
@@ -112,4 +117,4 @@ AP6412 Week 8 双人协作项目。SUN ZIZHI 与 WENG YUXUAN 使用老师提供�
 - [双人项目计划表](<docs/course-materials/Week8_Group_Project_Ideas&Planning without hints.docx>)
 - [Week 8 项目与提交说明](docs/course-materials/Week8_Game_Context_Slides.pdf)
 
-每组通过课程入口提交一份材料：完成的项目计划/文档和 GitHub 仓库链接。仓库包含最终代码和实际协作历史。截止时间以 NTULearn 公告为准。
+每组通过课程入口提交一份材料：完成的项目计划/文档和 GitHub 仓库链接。仓库包含最终代码和实际协作历史。截止时间以 NTULearn 公告为准。准备好的材料见[提交说明](docs/SUBMISSION_GUIDE.md)，仍需实际人员完成的项目见[待办](docs/REMAINING_TASKS.md)。

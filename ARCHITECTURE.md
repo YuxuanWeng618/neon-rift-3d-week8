@@ -53,7 +53,7 @@ their meaning, and the handlers are designed in our code**. The HUD uses native
 Godot controls and Godot player signals; manager/coordinator notifications use
 C# events. No dash mechanic is introduced by this survival extension.
 
-Member A's spawn integration is retained. Member B's local review version adds
+Member A's spawn integration is retained. Member B's merged survival version adds
 the 60-second result, HUD and restart. Kills never trigger victory.
 See [Member A changes and integration contract](docs/MEMBER_A_CHANGES.md).
 

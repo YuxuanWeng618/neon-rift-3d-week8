@@ -1,6 +1,6 @@
 # Member B 完整本地审阅包
 
-本轮已把用户选定的明亮街机风格写入 [视觉规范](../../VISUAL_STYLE.md)，并按 [实施计划](../../WENG_YUXUAN_MEMBER_B_IMPLEMENTATION_PLAN.md) 补齐可在本机完成的内容。制作没有使用任何skills；用户已授权通过功能分支推送，主分支合并留待PR审查。
+本轮已把用户选定的明亮街机风格写入 [视觉规范](../../VISUAL_STYLE.md)，并按 [实施计划](../../WENG_YUXUAN_MEMBER_B_IMPLEMENTATION_PLAN.md) 补齐可在本机完成的内容。制作没有使用任何skills；后续按用户授权完成工具辅助代码复核和PR合并，见[完成情况](../../COMPLETION_REPORT.md)。
 
 ## 本轮完成
 
@@ -57,8 +57,8 @@
 
 ## 审阅与剩余外部工作
 
-先审阅视觉规范、两种警告画面与完整视频，再试玩移动射击和重启。成果按功能分支提交，双机验证、人工难度评估、PR审查及主分支合并保留为待办。
+先审阅视觉规范、两种警告画面与完整视频，再试玩移动射击和重启。成果已按功能分支提交并合入main；双机验证、人工难度评估、队友实际审查结论与课程提交需要真实结果。
 
-复核更新：功能分支已推送，并创建[草稿PR #1](https://github.com/YuxuanWeng618/neon-rift-3d-week8/pull/1)；提交与PR创建不再属于待办。具体剩余事项见[统一待办清单](../../REMAINING_TASKS.md)。
+交付更新：[PR #1](https://github.com/YuxuanWeng618/neon-rift-3d-week8/pull/1)已合并，合并后的main通过本机干净检出复验。具体剩余事项见[统一待办清单](../../REMAINING_TASKS.md)。
 
 原始AVI与视频转换工具保存在本机辅助目录；仓库审阅包只保留较小的MP4，转换工具不是游戏依赖。
