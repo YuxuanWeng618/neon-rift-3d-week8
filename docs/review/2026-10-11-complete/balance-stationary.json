@@ -1,0 +1,17 @@
+{
+  "Mode": "stationary",
+  "Seed": 618,
+  "Result": "Lost",
+  "GameSeconds": 10.950000000000124,
+  "WallSeconds": 10.7220207,
+  "MaxHealth": 100,
+  "MoveSpeed": 7,
+  "RemainingHealth": 0,
+  "Kills": 0,
+  "Score": 0,
+  "DamageTaken": 100,
+  "DamageEvents": 8,
+  "TimeScale": 1,
+  "PhysicsTicks": 60,
+  "ScriptedInput": true
+}

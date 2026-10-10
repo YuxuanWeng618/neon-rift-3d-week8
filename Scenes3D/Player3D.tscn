@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cvyqhh4kwdf6a" path="res://Scripts3D/Player3D.cs" id="1_8ffln"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8ffln"]
-albedo_color = Color(0.2, 0.9019608, 1, 1)
+albedo_color = Color(0.08, 0.25, 0.9, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_4xlgs"]
 material = SubResource("StandardMaterial3D_8ffln")
@@ -11,6 +11,14 @@ size = Vector3(0.8, 0.6, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vg1nx"]
 size = Vector3(0.8, 0.6, 1)
+
+[sub_resource type="StandardMaterial3D" id="AimMaterial"]
+shading_mode = 0
+albedo_color = Color(0.06, 0.12, 0.25, 1)
+
+[sub_resource type="BoxMesh" id="AimMesh"]
+material = SubResource("AimMaterial")
+size = Vector3(0.16, 0.16, 0.5)
 
 [node name="Player" type="CharacterBody3D" unique_id=121266100]
 collision_mask = 8
@@ -21,3 +29,7 @@ mesh = SubResource("BoxMesh_4xlgs")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=284185134]
 shape = SubResource("BoxShape3D_vg1nx")
+
+[node name="AimMarker" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.1, -0.65)
+mesh = SubResource("AimMesh")

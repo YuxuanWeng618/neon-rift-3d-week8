@@ -1,0 +1,20 @@
+Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
+
+{
+  "Mode": "patrol-dodge",
+  "Seed": 618,
+  "Result": "Lost",
+  "GameSeconds": 34.066666666666016,
+  "WallSeconds": 33.8438098,
+  "MaxHealth": 100,
+  "MoveSpeed": 6,
+  "RemainingHealth": 0,
+  "Kills": 0,
+  "Score": 0,
+  "DamageTaken": 100,
+  "DamageEvents": 8,
+  "TimeScale": 1,
+  "PhysicsTicks": 60,
+  "ScriptedInput": true
+}
+PASS: balance trial recorded with normal physics; outcome is measurement, not human difficulty approval

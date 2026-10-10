@@ -3,6 +3,7 @@
 // OUR RULES: bullets travel in a straight line; expire after 2 s (player) or 4 s (enemy);
 // they damage only the opposing team and disappear at the first collision.
 
+#nullable enable
 using Godot;
 using System;
 

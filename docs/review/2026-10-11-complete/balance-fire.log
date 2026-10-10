@@ -1,0 +1,55 @@
+Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
+
+Kills: 1 | Score: 100
+Kills: 2 | Score: 200
+Kills: 3 | Score: 300
+Kills: 4 | Score: 400
+Kills: 5 | Score: 500
+Kills: 6 | Score: 600
+Kills: 7 | Score: 780
+Kills: 8 | Score: 880
+Kills: 9 | Score: 980
+Kills: 10 | Score: 1160
+Kills: 11 | Score: 1260
+Kills: 12 | Score: 1360
+Kills: 13 | Score: 1460
+Kills: 14 | Score: 1560
+Kills: 15 | Score: 1660
+Kills: 16 | Score: 1760
+Kills: 17 | Score: 1860
+Kills: 18 | Score: 2040
+Kills: 19 | Score: 2220
+Kills: 20 | Score: 2400
+Kills: 21 | Score: 2580
+Kills: 22 | Score: 2680
+Kills: 23 | Score: 2860
+Kills: 24 | Score: 2960
+Kills: 25 | Score: 3060
+Kills: 26 | Score: 3160
+Kills: 27 | Score: 3340
+Kills: 28 | Score: 3520
+Kills: 29 | Score: 3700
+Kills: 30 | Score: 3880
+Kills: 31 | Score: 3980
+Kills: 32 | Score: 4080
+Kills: 33 | Score: 4260
+Kills: 34 | Score: 4440
+Kills: 35 | Score: 4620
+{
+  "Mode": "patrol-fire",
+  "Seed": 618,
+  "Result": "Won",
+  "GameSeconds": 60.01666666666454,
+  "WallSeconds": 59.8104227,
+  "MaxHealth": 100,
+  "MoveSpeed": 7,
+  "RemainingHealth": 100,
+  "Kills": 35,
+  "Score": 4620,
+  "DamageTaken": 0,
+  "DamageEvents": 0,
+  "TimeScale": 1,
+  "PhysicsTicks": 60,
+  "ScriptedInput": true
+}
+PASS: balance trial recorded with normal physics; outcome is measurement, not human difficulty approval

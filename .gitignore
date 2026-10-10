@@ -18,3 +18,8 @@ obj/
 .DS_Store
 # Office temporary lock files
 ~$*
+
+# Rejected local review draft and generated image import metadata
+/docs/review/2026-10-11/
+/docs/review/**/*.png.import
+/docs/review/**/*-errors.log

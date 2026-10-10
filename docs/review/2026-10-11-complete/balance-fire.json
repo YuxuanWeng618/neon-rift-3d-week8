@@ -1,0 +1,17 @@
+{
+  "Mode": "patrol-fire",
+  "Seed": 618,
+  "Result": "Won",
+  "GameSeconds": 60.01666666666454,
+  "WallSeconds": 59.8104227,
+  "MaxHealth": 100,
+  "MoveSpeed": 7,
+  "RemainingHealth": 100,
+  "Kills": 35,
+  "Score": 4620,
+  "DamageTaken": 0,
+  "DamageEvents": 0,
+  "TimeScale": 1,
+  "PhysicsTicks": 60,
+  "ScriptedInput": true
+}
