@@ -8,6 +8,7 @@ AP6412 Week 8 双人协作项目。SUN ZIZHI 与 WENG YUXUAN 使用老师提供�
 - 成员B已接入60秒胜负、HUD、重启、低HP与最后10秒提示，完成本机验收和实际游戏视频。玩家参数保留原版，人工难度体验仍待试玩。
 - 本次开发使用 `feature/survival-ui-timer`，以成员A的 `8458863` 为基线，通过功能分支与PR交付。[完整审阅包](docs/review/2026-10-11-complete/README.md) 包含视频、11张效果图、382项检查与T01–T16记录。
 - 当前视觉按 [明亮街机规范](docs/VISUAL_STYLE.md) 制作，参数决策见 [平衡记录](docs/BALANCE_REVIEW.md)。
+- 功能分支已推送，已创建[草稿PR #1](https://github.com/YuxuanWeng618/neon-rift-3d-week8/pull/1)。尚未完成事项见[复核后的待办清单](docs/REMAINING_TASKS.md)。
 - 正式双语项目计划见 [Neon Rift 3D Survival Plan](docs/Neon_Rift_3D_Survival_Plan_Bilingual.docx)。
 - `starter-v1.0` 标签保存原始项目导入提交。
 - 原始说明见 [docs/STARTER_README.md](docs/STARTER_README.md)。
@@ -94,10 +95,15 @@ AP6412 Week 8 双人协作项目。SUN ZIZHI 与 WENG YUXUAN 使用老师提供�
 - [x] 未到 60 秒时，原版目标击杀数不会触发生存模式胜利。
 - [x] 胜利或失败后停止计时和生成新敌人。
 - [x] 重新开始后所有状态与难度进度正确重置。
-- [ ] 两人的功能合并后都能运行。
+- [x] 成员A与成员B功能已在同一场景完成本机集成验证。
+- [x] 功能分支已提交、推送并创建草稿PR。
+- [ ] 人工试玩与难度评价已记录。
+- [ ] 队友完成正式代码审查。
+- [ ] 审查通过后合入main，双方取得合并版本并复验。
 - [x] 说明修改了哪些类、各自职责和修改原因。
 - [x] 项目计划文档已上传。
-- [ ] 保留清楚的分支、提交和合并记录。
+- [x] 已保留成员A和成员B的分支、提交及草稿PR记录。
+- [ ] 主分支合并记录与课程提交回执已保存。
 
 ## 课程原始材料
 
