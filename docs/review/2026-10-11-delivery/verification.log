@@ -1,0 +1,61 @@
+Godot: 4.7.2.stable.mono.official.ed1daf0bf
+  正在确定要还原的项目…
+  所有项目均是最新的，无法还原。
+  NeonRiftStage1 -> I:\2026-08 NTU上\2026-8 Coding\L8\NeonRift3D-Week8\.godot\mono\temp\bin\Debug\NeonRiftStage1.dll
+
+已成功生成。
+    0 个警告
+    0 个错误
+
+已用时间 00:00:07.85
+Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
+
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started 项目初始化 (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | 正在扫描文件结构……[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | 正在加载全局类名……[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | 正在校验 GDExtension……[39m[0m
+[  50% ] [90m[1mfirst_scan_filesystem[22m | 正在创建自动加载脚本……[39m[0m
+[  66% ] [90m[1mfirst_scan_filesystem[22m | 正在初始化插件……[39m[0m
+[  83% ] [90m[1mfirst_scan_filesystem[22m | 正在启动文件扫描……[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Started 正在加载编辑器 (5 steps)[39m[0m
+[   0% ] [90m[1mloading_editor_layout[22m | 正在加载编辑器布局……[39m[0m
+[  16% ] [90m[1mloading_editor_layout[22m | 正在加载停靠面板……[39m[0m
+[92m[ DONE ][39m [1mloading_editor_layout[22m
+[0m
+Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
+
+Kills: 1 | Score: 100
+Kills: 2 | Score: 200
+Kills: 3 | Score: 300
+Kills: 4 | Score: 400
+Kills: 5 | Score: 500
+Kills: 6 | Score: 600
+Kills: 7 | Score: 700
+Kills: 8 | Score: 800
+Kills: 9 | Score: 900
+Kills: 10 | Score: 1000
+Kills: 1 | Score: 100
+PASS: 83 survival-mode checks
+Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
+
+Kills: 1 | Score: 100
+Kills: 2 | Score: 200
+Kills: 3 | Score: 300
+Kills: 4 | Score: 400
+Kills: 5 | Score: 500
+Kills: 6 | Score: 600
+Kills: 7 | Score: 700
+Kills: 8 | Score: 800
+Kills: 9 | Score: 900
+Kills: 10 | Score: 1000
+PASS: 272 enemy-spawner checks
+Godot Engine v4.7.2.stable.mono.official.ed1daf0bf - https://godotengine.org
+OpenGL API 3.3.0 NVIDIA 576.52 - Compatibility - Using Device: NVIDIA - NVIDIA GeForce RTX 3070 Ti Laptop GPU
+
+WINDOW PASS: (1280, 720); viewport=(1280, 720); rendered=(1280, 720); aim and GUI restart passed
+WINDOW PASS: (960, 540); viewport=(1280, 720); rendered=(960, 540); aim and GUI restart passed
+WINDOW PASS: (960, 720); viewport=(1280, 960); rendered=(960, 720); aim and GUI restart passed
+PASS: 27 graphical window checks
+Verification completed successfully.
